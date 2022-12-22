@@ -104,19 +104,23 @@ const movementHandler = (e) => {
     // move down
     // move right
     case (87):
+    case(38):
       // this moves player up 10px every press
       player.y -= 10
       break 
     // move left
     case (65):
+    case(37):
       player.x -= 10
       break
     // move down
     case(83):
+    case(40):
       player.y += 10
       break
     // more right
     case(68):
+    case(39):
       player.x += 10
       break
   }
@@ -133,6 +137,12 @@ const movementHandler = (e) => {
 const gameLoop = () => {
   // no console.logs in here if you can avoid
   //for testing, its okay to add them but final should not have any
+
+  // to resemble movement we should clear the old canvas every loop
+  // then instead of drawing a snake, because its maintaining all the old positions of our character
+  // well just see our player square moving around 
+  ctx.clearRect(0, 0, game.width, game.height)
+
   player.render()
   movement.textContent = `${player.x}, ${player.y}`
 
