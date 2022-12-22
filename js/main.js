@@ -126,6 +126,29 @@ const movementHandler = (e) => {
   }
 }
 
+/////////// Collision Detection ///////////
+// here we'll detect a hit between entities
+// to accurately do this, we need to account for the entire space tha tone entity takes up.
+// this means using player x, y, height, width
+// this also means using ogre x, y, height, width
+const detectHit = () => {
+  // well basically use a big if statement, to be able to tell if any of the sides of our hero interact with any of the sides of our ogre
+  if(player.x < ogre.x + ogre.width //if player player coord then mark a hit 
+    && player.x + player.width > ogre.x
+    && player.y < ogre.y + ogre.height
+    && player.y + player.height > ogre.y) {
+      // console.log('HIT')
+      // console.log('player x-> ', player.x)
+      // console.log('player y-> ', player.y)
+      // console.log('ogre x -> ', ogre.x)
+      // console.log('ogre y-> ', ogre.y)
+
+      status.textContent = 'We have a hit!'
+      ogre.alive = false
+      status.textContent = 'You Win'
+    }
+}
+
 /////////// GAME LOOP ///////////
 
 // were going to setup a game loop function 
@@ -137,6 +160,11 @@ const movementHandler = (e) => {
 const gameLoop = () => {
   // no console.logs in here if you can avoid
   //for testing, its okay to add them but final should not have any
+
+  // putting our hit detection at the top so it takes precedence
+  if(ogre.alive) {
+    detectHit() //calls back to detect hit function 
+  }
 
   // to resemble movement we should clear the old canvas every loop
   // then instead of drawing a snake, because its maintaining all the old positions of our character
